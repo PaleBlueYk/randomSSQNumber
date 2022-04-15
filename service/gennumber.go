@@ -10,6 +10,7 @@ import (
 )
 
 var seed int64
+
 func init() {
 	seed = time.Now().Unix()
 	rand.Seed(seed)
@@ -17,15 +18,25 @@ func init() {
 }
 
 // GenNumber 生成随机号码
-func GenNumber() string {
-	return fmt.Sprintf("%s -- %d", redNumber(), blueNumber())
+func GenNumber(count int) string {
+
+	var result string
+
+	for i := 0; i < count; i++ {
+		if i != 0 {
+			result += "\n"
+		}
+		result += fmt.Sprintf("<li>%s=>%d</li>", redNumber(), blueNumber())
+	}
+
+	return result
 }
 
 /**
 生成规则:
 http://www.cwl.gov.cn/c/2018/10/12/417937.shtml
 双色球投注区分为红色球号码区和蓝色球号码区，红色球号码区由1-33共三十三个号码组成，蓝色球号码区由1-16共十六个号码组成。
- */
+*/
 
 // RedNumber 红球生成
 func redNumber() string {
@@ -53,5 +64,5 @@ func redNumber() string {
 
 // BlueNumber 篮球生成
 func blueNumber() int {
-	return rand.Intn(15) +1
+	return rand.Intn(15) + 1
 }

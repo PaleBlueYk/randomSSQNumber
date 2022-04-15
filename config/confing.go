@@ -3,18 +3,24 @@ package config
 import (
 	"fmt"
 	"github.com/BurntSushi/toml"
+	"github.com/PaleBlueYk/randomSSQNumber/pkg/enum"
 	"github.com/paleblueyk/logger"
 	"path/filepath"
-	"github.com/PaleBlueYk/randomSSQNumber/pkg/enum"
 )
 
 // App 配置文件结构
 type App struct {
-	WxPusher
+	Server   Server
+	WxPusher WxPusher
+}
+
+type Server struct {
+	Port int `toml:"Port"`
 }
 
 type WxPusher struct {
-	AppToken string
+	Url      string `toml:"Url"`
+	AppToken string `toml:"AppToken"`
 }
 
 var AppConf App
@@ -34,5 +40,6 @@ func InitConfig(env enum.ENVType) bool {
 		logger.Error(err)
 		return false
 	}
+	logger.Info(AppConf)
 	return true
 }

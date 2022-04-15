@@ -1,2 +1,7 @@
+
+[Server]
+Port = 9100
+
 [WxPusher]
+Url = "http://wxpusher.zjiecode.com/api/send/message"
 AppToken = ""

@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"github.com/PaleBlueYk/randomSSQNumber/config"
 	"github.com/PaleBlueYk/randomSSQNumber/pkg/enum"
-	"github.com/PaleBlueYk/randomSSQNumber/service"
+	v1 "github.com/PaleBlueYk/randomSSQNumber/routers/v1"
+	"github.com/gin-gonic/gin"
 	"github.com/paleblueyk/logger"
 	"os"
 )
@@ -18,7 +20,8 @@ func main() {
 		logger.Info("读取配置文件失败")
 		return
 	}
-	for i := 0; i < 5; i++ {
-		logger.Info(service.GenNumber())
-	}
+
+	engine := gin.Default()
+	v1.Routers(engine)
+	_ = engine.Run(fmt.Sprintf(":%d", config.AppConf.Server.Port))
 }

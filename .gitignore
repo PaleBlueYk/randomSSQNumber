@@ -1,3 +1,4 @@
 /config/config_dev.toml
 /config/config_test.toml
 .idea
+/randomSSQNumber
