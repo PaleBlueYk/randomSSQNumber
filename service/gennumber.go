@@ -43,7 +43,7 @@ func redNumber() string {
 	var redNumbers []int
 	numRange := 6
 	for i := 0; i < numRange; i++ {
-		num := rand.Intn(32) + 1
+		num := rand.Intn(33) + 1
 		// 防止数字重复
 		if lo.Contains(redNumbers, num) {
 			numRange++
@@ -64,5 +64,5 @@ func redNumber() string {
 
 // BlueNumber 篮球生成
 func blueNumber() int {
-	return rand.Intn(15) + 1
+	return rand.Intn(16) + 1
 }

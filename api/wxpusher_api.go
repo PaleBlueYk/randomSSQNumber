@@ -38,7 +38,7 @@ func UserUploadInfo(c *gin.Context) {
 	count, err := strconv.Atoi(requestParams.Data.Content)
 	if err != nil {
 		logger.Error(err)
-		msgArr, err := wxpusher.SendMessage(model.NewMessage(config.AppConf.WxPusher.AppToken).SetSummary(err.Error()).SetContent(err.Error()).AddUId(requestParams.Data.Uid))
+		msgArr, err := wxpusher.SendMessage(model.NewMessage(config.AppConf.WxPusher.AppToken).SetSummary("处理错误").SetContent(err.Error()).AddUId(requestParams.Data.Uid))
 		if err != nil {
 			logger.Error(err)
 			return
@@ -47,7 +47,7 @@ func UserUploadInfo(c *gin.Context) {
 		return
 	}
 	msg := service.GenNumber(count)
-	resultList, err := wxpusher.SendMessage(model.NewMessage(config.AppConf.WxPusher.AppToken).SetSummary(msg).SetContent(msg).AddUId(requestParams.Data.Uid))
+	resultList, err := wxpusher.SendMessage(model.NewMessage(config.AppConf.WxPusher.AppToken).SetSummary("双色球随机数").SetContent(msg).AddUId(requestParams.Data.Uid))
 	if err != nil {
 		logger.Error(err)
 		return
