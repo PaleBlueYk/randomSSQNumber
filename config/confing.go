@@ -31,7 +31,7 @@ func InitConfig(env enum.ENVType) bool {
 	switch env {
 	case enum.Prod:
 		configFile = "config/config.toml"
-		if utils.FileIsExist(configFile) {
+		if !utils.FileIsExist(configFile) {
 			configFile = "config.toml"
 		}
 	case enum.Dev:

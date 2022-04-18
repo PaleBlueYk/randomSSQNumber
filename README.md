@@ -15,6 +15,10 @@
 ```bash
 .\build.bat
 ```
+### Mac
+```bash
+make
+```
 
 ## 后续
 - [ ] docker容器化
