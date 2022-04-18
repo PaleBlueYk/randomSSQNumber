@@ -1,4 +1,4 @@
 SET CGO_ENABLED=0
 SET GOOS=linux
 SET GOARCH=amd64
-go build -o randomSSQNumber main.go
+go build -o randSSQ main.go

@@ -1,9 +1,9 @@
 package config
 
 import (
-	"fmt"
 	"github.com/BurntSushi/toml"
 	"github.com/PaleBlueYk/randomSSQNumber/pkg/enum"
+	"github.com/PaleBlueYk/randomSSQNumber/pkg/utils"
 	"github.com/paleblueyk/logger"
 	"path/filepath"
 )
@@ -30,13 +30,16 @@ func InitConfig(env enum.ENVType) bool {
 	var configFile string
 	switch env {
 	case enum.Prod:
-		configFile = "config.toml"
+		configFile = "config/config.toml"
+		if utils.FileIsExist(configFile) {
+			configFile = "config.toml"
+		}
 	case enum.Dev:
-		configFile = "config_dev.toml"
+		configFile = "config/config_dev.toml"
 	case enum.Test:
-		configFile = "config_test.toml"
+		configFile = "config/config_test.toml"
 	}
-	if _, err := toml.DecodeFile(filepath.FromSlash(fmt.Sprintf("config/%s", configFile)), &AppConf); err != nil {
+	if _, err := toml.DecodeFile(filepath.FromSlash(configFile), &AppConf); err != nil {
 		logger.Error(err)
 		return false
 	}
