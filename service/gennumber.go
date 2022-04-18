@@ -11,15 +11,11 @@ import (
 
 var seed int64
 
-func init() {
+// GenNumber 生成随机号码
+func GenNumber(count int) string {
 	seed = time.Now().Unix()
 	rand.Seed(seed)
 	logger.Info("随机数种子: ", seed)
-}
-
-// GenNumber 生成随机号码
-func GenNumber(count int) string {
-
 	var result string
 
 	for i := 0; i < count; i++ {
