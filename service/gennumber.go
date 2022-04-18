@@ -6,6 +6,7 @@ import (
 	"github.com/samber/lo"
 	"math/rand"
 	"sort"
+	"strconv"
 	"time"
 )
 
@@ -17,12 +18,8 @@ func GenNumber(count int) string {
 	rand.Seed(seed)
 	logger.Info("随机数种子: ", seed)
 	var result string
-
 	for i := 0; i < count; i++ {
-		if i != 0 {
-			result += "\n"
-		}
-		result += fmt.Sprintf("<li>%s=>%d</li>", redNumber(), blueNumber())
+		result += fmt.Sprintf("<li>%s=><span style='color:white;background-color: blue; width: 50px;line-height: 50px; border-radius: 50%%; padding: 5px;'>%s</span></li>", redNumber(), blueNumber())
 	}
 
 	return result
@@ -49,16 +46,22 @@ func redNumber() string {
 	}
 	sort.Ints(redNumbers)
 	var result string
-	for idx, number := range redNumbers {
-		if idx > 0 {
-			result += ","
+	for _, number := range redNumbers {
+		num := strconv.Itoa(number)
+		if len(num) == 1 {
+			num = "0" + num
 		}
-		result += fmt.Sprintf("%d", number)
+		result += fmt.Sprintf("<span style='color:white;background-color: red; width: 50px;line-height: 50px; border-radius: 50%%; padding: 5px;'>%s</span>", num)
 	}
 	return result
 }
 
 // BlueNumber 篮球生成
-func blueNumber() int {
-	return rand.Intn(16) + 1
+func blueNumber() string {
+	num := rand.Intn(16) + 1
+	numStr := strconv.Itoa(num)
+	if len(numStr) == 1 {
+		numStr = "0" + numStr
+	}
+	return numStr
 }
