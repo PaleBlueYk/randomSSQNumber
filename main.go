@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/PaleBlueYk/randomSSQNumber/config"
+	"github.com/PaleBlueYk/randomSSQNumber/db"
 	"github.com/PaleBlueYk/randomSSQNumber/pkg/enum"
 	v1 "github.com/PaleBlueYk/randomSSQNumber/routers/v1"
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,10 @@ func main() {
 	}
 	if !config.InitConfig(env) {
 		logger.Info("读取配置文件失败")
+		return
+	}
+	if err := db.ConnectMysql(); err != nil {
+		logger.Error("mysql连接失败: ", err)
 		return
 	}
 

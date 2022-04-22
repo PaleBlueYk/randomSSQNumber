@@ -46,8 +46,8 @@ func UserUploadInfo(c *gin.Context) {
 		logger.Info(msgArr)
 		return
 	}
-	msg := service.GenNumber(count)
-	resultList, err := wxpusher.SendMessage(model.NewMessage(config.AppConf.WxPusher.AppToken).SetSummary("双色球随机数").SetContent(msg).AddUId(requestParams.Data.Uid))
+	msg := service.GetPage(count, requestParams.Data.Uid)
+	resultList, err := wxpusher.SendMessage(model.NewMessage(config.AppConf.WxPusher.AppToken).SetSummary("双色球随机数").SetContentType(2).SetContent(msg).AddUId(requestParams.Data.Uid))
 	if err != nil {
 		logger.Error(err)
 		return

@@ -9,21 +9,38 @@ import (
 )
 
 // App 配置文件结构
-type App struct {
-	Server   Server
-	WxPusher WxPusher
+type app struct {
+	BaseUrl  string `toml:"BaseUrl"`
+	Server   server
+	WxPusher wxPusher
+	Redis    redis
+	Mysql    mysql
 }
 
-type Server struct {
+type server struct {
 	Port int `toml:"Port"`
 }
 
-type WxPusher struct {
+type wxPusher struct {
 	Url      string `toml:"Url"`
 	AppToken string `toml:"AppToken"`
 }
 
-var AppConf App
+type redis struct {
+	Addr     string `toml:"Addr"`
+	Password string `toml:"Password"`
+	DB       int    `toml:"DB"`
+}
+
+type mysql struct {
+	Host     string
+	Port     uint
+	User     string
+	Password string
+	DB       string
+}
+
+var AppConf app
 
 // InitConfig 初始化配置文件
 func InitConfig(env enum.ENVType) bool {

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>双色球随机数</title>
+    <style>
+        h3 {
+            color: #57cc99;
+        }
+        .redBall {
+            display: inline-block;
+            color: white;
+            background-color: #f00;
+            width: 2rem;
+            height: 2rem;
+            line-height: 1rem;
+            padding: .5rem;
+            margin-right: 2px;
+            margin-left: 2px;
+            border-radius: 50%;
+        }
+        .blueBall{
+            display: inline-block;
+            color: white;
+            background-color: #00f;
+            width: 2rem;
+            height: 2rem;
+            line-height: 1rem;
+            padding: .5rem;
+            margin-right: 2px;
+            margin-left: 2px;
+            border-radius: 50%;
+        }
+        .css-button-shadow-border--green {
+            min-width: 130px;
+            height: 40px;
+            color: #fff;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 5px;
+            border: none;
+            box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5), 7px 7px 20px 0px rgba(0,0,0,.1), 4px 4px 5px 0px rgba(0,0,0,.1);
+            background: #57cc99;
+        }
+        .css-button-shadow-border--green:hover {
+            background-color: #80ed99;
+        }
+        .css-button-shadow-border--green:active {
+            top: 2px;
+        }
+        li {
+            margin-top: 1rem;
+        }
+        .btn-box {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>第{{Num}}期</h3>
+    {{htmlContent}}
+    <div class="btn-box">
+        <button class="css-button-shadow-border--green" id="submit" >登记为本期购买号码</button>
+        <p></p>
+    </div>
+</body>
+<script>
+    document.getElementById("submit").onclick = function () {
+        fetch("{{BaseUrl}}/v1/num", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({{submitData}}),
+        }).then(data => data.json())
+        .then((data) => {
+            alert(data.msg);
+        })
+    }
+</script>
+</html>
