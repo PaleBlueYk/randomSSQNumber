@@ -1,12 +1,15 @@
 package service
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/PaleBlueYk/randomSSQNumber/config"
+	"github.com/PaleBlueYk/randomSSQNumber/db"
 	"github.com/PaleBlueYk/randomSSQNumber/model"
 	"github.com/paleblueyk/logger"
 	"github.com/samber/lo"
+	uuid "github.com/satori/go.uuid"
 	"io/ioutil"
 	"math/rand"
 	"sort"
@@ -31,11 +34,12 @@ func GetPage(count int, uid string) string {
 		logger.Error(err)
 		return list
 	}
-	dataMap := make(map[string]interface{})
-	dataMap = map[string]interface{}{
-		"uid":  uid,
-		"num":  nextNum,
-		"list": numModeList,
+	id := uuid.NewV4().String()
+	dataMap := &model.TmpSaveNum{
+		ID:   id,
+		UID:  uid,
+		Num:  nextNum,
+		List: numModeList,
 	}
 	submitData, err := json.Marshal(&dataMap)
 	if err != nil {
@@ -43,10 +47,15 @@ func GetPage(count int, uid string) string {
 		return list
 	}
 
+	// redis 记录, 保存5天
+	if err := db.RDB.Set(context.Background(), id, string(submitData), 24*5*time.Hour).Err(); err != nil {
+		logger.Error(err)
+	}
+
 	result = strings.ReplaceAll(string(htmlTemplate), "{{htmlContent}}", list) // 显示数组
 	result = strings.ReplaceAll(result, "{{Num}}", strconv.Itoa(nextNum))      // 显示数组
 	result = strings.ReplaceAll(result, "{{BaseUrl}}", config.AppConf.BaseUrl) // 网站部署地址
-	result = strings.ReplaceAll(result, "{{submitData}}", string(submitData))          // 提交数据
+	result = strings.ReplaceAll(result, "{{RDBID}}", id)                       // 提交数据
 
 	return result
 }

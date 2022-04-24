@@ -25,6 +25,7 @@ func main() {
 		logger.Error("mysql连接失败: ", err)
 		return
 	}
+	db.ConnectRDB()
 
 	engine := gin.Default()
 	v1.Routers(engine)

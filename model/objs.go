@@ -25,7 +25,16 @@ type GenNum struct {
 
 type NumSaveData struct {
 	gorm.Model
-	Uid  string `json:"uid" gorm:"size:50"`          //用户uid
-	Num  int    `json:"num"`                         // 第几期
+	RdbID string `json:"rdb_id" gorm:"unique;comment:'redis id'"`
+	Uid  string `json:"uid" gorm:"size:50"`        //用户uid
+	Num  int    `json:"num"`                       // 第几期
 	List string `json:"list" gorm:"type:longtext"` // 选择的数字列表
+}
+
+// TmpSaveNum redis 临时存储
+type TmpSaveNum struct {
+	ID   string   `json:"id"`   // 随机id redis key
+	UID  string   `json:"uid"`  // 用户id
+	Num  int      `json:"num"`  // 期号
+	List []GenNum `json:"list"` // 号码
 }
