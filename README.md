@@ -13,7 +13,7 @@
 ## 构建
 ### Windows
 ```bash
-.\build.bat
+build.bat
 ```
 ### Mac
 ```bash

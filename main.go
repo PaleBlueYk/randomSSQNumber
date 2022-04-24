@@ -8,10 +8,15 @@ import (
 	v1 "github.com/PaleBlueYk/randomSSQNumber/routers/v1"
 	"github.com/gin-gonic/gin"
 	"github.com/paleblueyk/logger"
+	"math/rand"
 	"os"
+	"time"
 )
 
 func main() {
+	seed := time.Now().Unix()
+	rand.Seed(seed)
+	logger.Info("随机数种子: ", seed)
 	env := enum.Prod
 	logger.Info(os.Args)
 	if len(os.Args) > 1 {

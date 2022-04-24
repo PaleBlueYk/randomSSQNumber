@@ -53,4 +53,5 @@ func UserUploadInfo(c *gin.Context) {
 		return
 	}
 	logger.Info(resultList)
+	c.Writer.WriteString(msg)
 }

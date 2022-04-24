@@ -62,9 +62,6 @@ func GetPage(count int, uid string) string {
 
 // GenNumberHtml 生成随机号码
 func GenNumberHtml(numModel []model.GenNum) string {
-	seed = time.Now().Unix()
-	rand.Seed(seed)
-	logger.Info("随机数种子: ", seed)
 	var result string
 	for _, num := range numModel {
 		var redStr string

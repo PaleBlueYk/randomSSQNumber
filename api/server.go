@@ -14,7 +14,7 @@ import (
 // SubmitMySSQ 提交双色球号码
 func SubmitMySSQ(c *gin.Context) {
 	id := c.Query("id")
-	logger.Info("id: ", id)
+	logger.Info("保存数据 redis id: ", id)
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"msg": "id不能为空",
@@ -41,7 +41,7 @@ func SubmitMySSQ(c *gin.Context) {
 		logger.Error(err)
 	}
 	if numData.ID > 0 {
-		logger.Error("数据已存在: %#v", numData)
+		logger.Error("数据已存在,id: %d", numData.ID)
 		c.JSON(http.StatusAlreadyReported, gin.H{
 			"msg": "数据已保存",
 		})
