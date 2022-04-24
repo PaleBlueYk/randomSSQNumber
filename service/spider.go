@@ -9,7 +9,9 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/go-resty/resty/v2"
 	"github.com/paleblueyk/logger"
+	"sort"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -28,7 +30,7 @@ func GetPrizeInformation() []model.PrizeInformation {
 			switch i {
 			case 0:
 				item.Num, _ = strconv.Atoi(td.Text())
-			case 1,2,3,4,5,6:
+			case 1, 2, 3, 4, 5, 6:
 				item.RedNum = append(item.RedNum, td.Text())
 			case 7:
 				item.BlueNum = td.Text()
@@ -56,6 +58,29 @@ func GetPrizeInformation() []model.PrizeInformation {
 	return result
 }
 
+// GetNewPrize 获取本期开奖号码
+func GetNewPrize() model.Prize {
+	doc := catGovSite()
+	num := doc.Find("div.ssqQh-dom").Text()
+	logger.Info("第%s期", num)
+	redNum := doc.Find(".ssqRed-dom").Text()
+	logger.Info("红球: ", redNum)
+	blueNum := doc.Find(".ssqBlue-dom").Text()
+	logger.Info("篮球: ", blueNum)
+	var (
+		redNumList  []string
+		blueNumList []string
+	)
+	redNumList = utils.StrList2code(redNum)
+	blueNumList = utils.StrList2code(blueNum)
+	sort.Strings(redNumList)
+	return model.Prize{
+		Num:     num,
+		RedNum:  redNumList,
+		BlueNum: blueNumList[0],
+	}
+}
+
 // 抓取彩票50
 func catCP500() (doc *goquery.Document) {
 	resp, err := resty.New().R().Get(site.CP500)
@@ -69,6 +94,21 @@ func catCP500() (doc *goquery.Document) {
 		logger.Error(err)
 	}
 	doc, err = goquery.NewDocumentFromReader(bytes.NewReader(docBs))
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	return
+}
+
+// 抓取官网
+func catGovSite() (doc *goquery.Document) {
+	resp, err := resty.New().R().Get(site.GovSite)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	doc, err = goquery.NewDocumentFromReader(strings.NewReader(resp.String()))
 	if err != nil {
 		logger.Error(err)
 		return

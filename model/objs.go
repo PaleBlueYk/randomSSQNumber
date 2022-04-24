@@ -18,6 +18,12 @@ type PrizeInformation struct {
 	PrizeTime   time.Time `json:"prize_time"`    // 开奖日期 2006-01-02
 }
 
+type Prize struct {
+	Num     string   `json:"num"`
+	RedNum  []string `json:"red_num"`  // 红球
+	BlueNum string   `json:"blue_num"` // 篮球
+}
+
 type GenNum struct {
 	RedNum  []string `json:"red_num"`  // 红球
 	BlueNum string   `json:"blue_num"` // 篮球
@@ -25,10 +31,12 @@ type GenNum struct {
 
 type NumSaveData struct {
 	gorm.Model
-	RdbID string `json:"rdb_id" gorm:"unique;comment:'redis id'"`
-	Uid  string `json:"uid" gorm:"size:50"`        //用户uid
-	Num  int    `json:"num"`                       // 第几期
-	List string `json:"list" gorm:"type:longtext"` // 选择的数字列表
+	RdbID      string `json:"rdb_id" gorm:"unique;comment:'redis id'"`
+	Uid        string `json:"uid" gorm:"size:50"`        //用户uid
+	Num        int    `json:"num"`                       // 第几期
+	List       string `json:"list" gorm:"type:longtext"` // 选择的数字列表
+	BingoInfo  string `json:"bingo_level"`               // 中奖情况
+	BingoMoney uint   `json:"bingo_money"`               // 中奖金额 元
 }
 
 // TmpSaveNum redis 临时存储
@@ -37,4 +45,9 @@ type TmpSaveNum struct {
 	UID  string   `json:"uid"`  // 用户id
 	Num  int      `json:"num"`  // 期号
 	List []GenNum `json:"list"` // 号码
+}
+
+type BingoInfo struct {
+	BingoInfo  string `json:"bingo_level"`               // 中奖情况
+	BingoMoney uint   `json:"bingo_money"`               // 中奖金额 元
 }

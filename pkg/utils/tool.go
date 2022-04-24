@@ -5,6 +5,7 @@ import (
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 	"io/ioutil"
+	"strings"
 )
 
 func GbkToUtf8(s []byte) ([]byte, error) {
@@ -23,4 +24,10 @@ func Utf8ToGbk(s []byte) ([]byte, error) {
 		return nil, e
 	}
 	return d, nil
+}
+
+func StrList2code(str string) []string {
+	str = strings.ReplaceAll(str, "[", "")
+	str = strings.ReplaceAll(str, "]", "")
+	return strings.Split(str, ",")
 }

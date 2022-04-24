@@ -57,6 +57,8 @@ github.com/paleblueyk/logger v1.0.0 h1:lZ+f/33+ZS0ATpVAaQl6XcXOyFj0Q1mtP/WSUD/8y
 github.com/paleblueyk/logger v1.0.0/go.mod h1:/YxbuqveloLiWoZUqi3lrgUYdkZMfOL1QaKAZII4IkA=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/robfig/cron/v3 v3.0.0 h1:kQ6Cb7aHOHTSzNVNEhmp8EcWKLb4CbiMW9h9VyIhO4E=
+github.com/robfig/cron/v3 v3.0.0/go.mod h1:eQICP3HwyT7UooqI/z+Ov+PtYAWygg1TEWWzGIFLtro=
 github.com/samber/lo v1.13.0 h1:82AIN+opOjdaP2pntOu8UxK1Zp0OyjJrOTMFb44YF1o=
 github.com/samber/lo v1.13.0/go.mod h1:2I7tgIv8Q1SG2xEIkRq0F2i2zgxVpnyPOP0d3Gj2r+A=
 github.com/satori/go.uuid v1.2.0 h1:0uYX9dsZ2yD7q2RtLRtPSdGDWzjeM3TbMJP9utgA0ww=

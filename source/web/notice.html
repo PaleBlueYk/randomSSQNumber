@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>中奖通知</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h2 {
+            color: #a00000;
+            text-align: center;
+        }
+
+        h3 {
+            color: red;
+            text-align: center;
+        }
+
+        .money {
+            font-size: 1.5rem;
+            color: brown;
+        }
+
+        .info {
+            color: darkgray;
+            font-size: .7rem;
+        }
+
+        span {
+            width: 1.2rem;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            border-radius: 50%;
+            border: 2px solid #ffde00;
+            display: inline-block;
+            background-color: #fff200;
+        }
+    </style>
+</head>
+<body>
+<h2>中奖通知</h2>
+<h3>{{BingoInfo}}</h3>
+<p class="money">预计中奖金额为{{BingoMoney}}元</p>
+<p class="info"><span><b>!</b></span> 中奖金额为程序计算,可能存在差错，请个人进行二次核验</p>
+</body>
+</html>

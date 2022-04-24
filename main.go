@@ -6,6 +6,7 @@ import (
 	"github.com/PaleBlueYk/randomSSQNumber/db"
 	"github.com/PaleBlueYk/randomSSQNumber/pkg/enum"
 	v1 "github.com/PaleBlueYk/randomSSQNumber/routers/v1"
+	"github.com/PaleBlueYk/randomSSQNumber/service"
 	"github.com/gin-gonic/gin"
 	"github.com/paleblueyk/logger"
 	"math/rand"
@@ -31,6 +32,7 @@ func main() {
 		return
 	}
 	db.ConnectRDB()
+	go service.Notice2User()
 
 	engine := gin.Default()
 	v1.Routers(engine)
