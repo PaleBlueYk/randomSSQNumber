@@ -19,7 +19,7 @@ import (
 // Notice2User 通知用户
 func Notice2User() {
 	c := cron.New()
-	enID, err := c.AddFunc("16 21 ? * 1,3,5", func() {
+	enID, err := c.AddFunc("31 21 ? * 1,3,5", func() {
 		prizeInfo := GetNewPrize()
 		result, err := bingoCheck(prizeInfo, noticeUserList(prizeInfo.Num))
 		if err != nil {
