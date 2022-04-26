@@ -14,14 +14,20 @@ import (
 	"io/ioutil"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Notice2User 通知用户
 func Notice2User() {
 	c := cron.New()
 	enID, err := c.AddFunc("31 21 ? * 1,3,5", func() {
+	RESTART:
 		prizeInfo := GetNewPrize()
 		result, err := bingoCheck(prizeInfo, noticeUserList(prizeInfo.Num))
+		if err.Error() == "期号不对应" {
+			time.Sleep(5 * time.Minute)
+			goto RESTART
+		}
 		if err != nil {
 			logger.Error(err)
 			return
@@ -53,7 +59,7 @@ func noticeUserList(num string) (saveData []model.NumSaveData) {
 }
 
 // 中奖计算
-func bingoCheck(prizeInfo model.Prize, dataList []model.NumSaveData) (result []model.NumSaveData,  err error) {
+func bingoCheck(prizeInfo model.Prize, dataList []model.NumSaveData) (result []model.NumSaveData, err error) {
 	for idx, data := range dataList {
 		if data.List == "" {
 			continue
@@ -108,7 +114,7 @@ func bingoCheck(prizeInfo model.Prize, dataList []model.NumSaveData) (result []m
 					dataList[idx].BingoMoney += 5000000
 				} else {
 					dataList[idx].BingoInfo = "恭喜你,二等奖(二等奖奖池浮动，以官方发布为准)"
-					dataList[idx].BingoMoney += 5000000/0.25
+					dataList[idx].BingoMoney += 5000000 / 0.25
 				}
 			default:
 				dataList[idx].BingoInfo = "很遗憾,未中奖"
