@@ -22,9 +22,10 @@ func Notice2User() {
 	c := cron.New()
 	enID, err := c.AddFunc("31 21 ? * 1,3,5", func() {
 	RESTART:
-		prizeInfo := GetNewPrize()
+		prizeInfo, _ := GetNewPrize()
 		result, err := bingoCheck(prizeInfo, noticeUserList(prizeInfo.Num))
 		if err.Error() == "期号不对应" {
+			// 期号不对应等5分钟后检查
 			time.Sleep(5 * time.Minute)
 			goto RESTART
 		}
