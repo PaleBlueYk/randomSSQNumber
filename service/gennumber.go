@@ -28,6 +28,8 @@ func GetPage(count int, uid string) string {
 		numModeList = append(numModeList, getGenNum())
 	}
 	list := GenNumberHtml(numModeList)
+	prizeInfo, _ := GetNewPrize()
+	lastHtml := GenLastHtml(prizeInfo)
 	nextNum := GetNextNum()
 	htmlTemplate, err := ioutil.ReadFile("./source/web/template.html")
 	if err != nil {
@@ -56,6 +58,7 @@ func GetPage(count int, uid string) string {
 	result = strings.ReplaceAll(result, "{{Num}}", strconv.Itoa(nextNum))      // 显示数组
 	result = strings.ReplaceAll(result, "{{BaseUrl}}", config.AppConf.BaseUrl) // 网站部署地址
 	result = strings.ReplaceAll(result, "{{RDBID}}", id)                       // 提交数据
+	result = strings.ReplaceAll(result, "{{LAST}}", lastHtml)                  // 上次中奖号码
 
 	return result
 }
@@ -71,6 +74,18 @@ func GenNumberHtml(numModel []model.GenNum) string {
 		result += fmt.Sprintf("<li>%s=><span class='blueBall'>%s</span></li>", redStr, num.BlueNum)
 	}
 
+	return result
+}
+
+func GenLastHtml(lastNum model.Prize) string {
+	var (
+		result string
+		redStr string
+	)
+	for _, s := range lastNum.RedNum {
+		redStr += fmt.Sprintf("<span class='redBall'>%s</span>", s)
+	}
+	result += fmt.Sprintf("%s=><span class='blueBall'>%s</span>", redStr, lastNum.BlueNum)
 	return result
 }
 
