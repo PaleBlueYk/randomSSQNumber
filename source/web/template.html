@@ -84,15 +84,15 @@
 </head>
 <body>
 <h3>第{{Num}}期</h3>
+<div style="font-size: small; color: #a1a1a1">随机编号: {{RDBID}}</div>
 <p style="color: #af6b00">(以下号码均一倍)</p>
 {{htmlContent}}
 <div class="btn-box">
     <a href="{{BaseUrl}}/v1/num?id={{RDBID}}" class="css-button-shadow-border--green">登记为本期购买号码</a>
-    <div style="display: none">{{RDBID}}</div>
 </div>
-<div class="last">
-    <p>上期中间号码为(<span style="color: red;font-size: large"><b>请不要录入以下号码!</b></span>)：</p>
-    <p>{{LAST}}</p>
-</div>
+<!--<div class="last">-->
+<!--    <p>上期中间号码为(<span style="color: red;font-size: large"><b>请不要录入以下号码!</b></span>)：</p>-->
+<!--    <p>{{LAST}}</p>-->
+<!--</div>-->
 </body>
 </html>
