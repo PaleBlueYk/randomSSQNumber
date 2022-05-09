@@ -20,7 +20,7 @@ import (
 // Notice2User 通知用户
 func Notice2User() {
 	c := cron.New()
-	enID, err := c.AddFunc("31 21 ? * 1,3,5", func() {
+	enID, err := c.AddFunc("31 21 ? * 0,2,4", func() {
 	RESTART:
 		prizeInfo, _ := GetNewPrize()
 		result, err := bingoCheck(prizeInfo, noticeUserList(prizeInfo.Num))
@@ -66,7 +66,7 @@ func bingoCheck(prizeInfo model.Prize, dataList []model.NumSaveData) (result []m
 			continue
 		}
 		if strconv.Itoa(data.Num) != prizeInfo.Num {
-			logger.Error("期号不对应")
+			logger.Error("期号不对应: %s - %s", data.Num, prizeInfo.Num)
 			err = errors.New("期号不对应")
 			return
 		}
