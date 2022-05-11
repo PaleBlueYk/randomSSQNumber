@@ -9,5 +9,6 @@ func SubmitNum(router *gin.RouterGroup)  {
 	r := router.Group("/num")
 	{
 		r.GET("", api.SubmitMySSQ)
+		r.GET("/bingoCheck", api.BingoCheck)
 	}
 }

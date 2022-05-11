@@ -8,6 +8,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
+	"time"
 )
 
 var Mysql *gorm.DB
@@ -29,7 +30,9 @@ func ConnectMysql() (err error) {
 		logger.Error(err)
 		return
 	}
-
+	db, _ := Mysql.DB()
+	db.SetMaxOpenConns(10)
+	db.SetConnMaxLifetime(10 * 24 * time.Hour)
 	Migrate()
 	return nil
 }

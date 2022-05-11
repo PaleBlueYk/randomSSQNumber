@@ -23,8 +23,8 @@ func Notice2User() {
 	enID, err := c.AddFunc("30 21 ? * 0,2,4", func() {
 	RESTART:
 		prizeInfo, _ := GetNewPrize()
-		result, err := bingoCheck(prizeInfo, noticeUserList(prizeInfo.Num))
-		if err.Error() == "期号不对应" {
+		result, err := BingoCheck(prizeInfo, NoticeUserList(prizeInfo.Num))
+		if err != nil && err.Error() == "期号不对应" {
 			// 期号不对应等5分钟后检查
 			time.Sleep(5 * time.Minute)
 			goto RESTART
@@ -34,7 +34,7 @@ func Notice2User() {
 			return
 		}
 		for _, data := range result {
-			html := noticePage(data)
+			html := NoticePage(data)
 			_, err := wxpusher.SendMessage(model2.NewMessage(config.AppConf.WxPusher.AppToken).SetSummary(fmt.Sprintf("第%s期双色球中奖通知", prizeInfo.Num)).SetContentType(2).SetContent(html).AddUId(data.Uid))
 			if err != nil {
 				logger.Error(err)
@@ -50,7 +50,7 @@ func Notice2User() {
 }
 
 // NoticeUserList 获取需要通知的用户列表
-func noticeUserList(num string) (saveData []model.NumSaveData) {
+func NoticeUserList(num string) (saveData []model.NumSaveData) {
 	n, _ := strconv.Atoi(num)
 	if err := db.Mysql.Where("num = ?", n).Find(&saveData).Error; err != nil {
 		logger.Error(err)
@@ -59,8 +59,8 @@ func noticeUserList(num string) (saveData []model.NumSaveData) {
 	return
 }
 
-// 中奖计算
-func bingoCheck(prizeInfo model.Prize, dataList []model.NumSaveData) (result []model.NumSaveData, err error) {
+// BingoCheck 中奖计算
+func BingoCheck(prizeInfo model.Prize, dataList []model.NumSaveData) (result []model.NumSaveData, err error) {
 	for idx, data := range dataList {
 		if data.List == "" {
 			continue
@@ -139,10 +139,10 @@ func redBingoCheck(chooseNum []string, prizeNum []string) (count uint) {
 	return
 }
 
-// 制作中奖通知页面
-func noticePage(data model.NumSaveData) string {
+// NoticePage 制作中奖通知页面
+func NoticePage(data model.NumSaveData) string {
 	var result string
-	html, err := ioutil.ReadFile("./source/notice.html")
+	html, err := ioutil.ReadFile("./source/web/notice.html")
 	if err != nil {
 		logger.Error(err)
 		return ""
