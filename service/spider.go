@@ -65,20 +65,6 @@ func GetPrizeInformation() []model.PrizeInformation {
 
 // GetNewPrize 获取本期开奖号码
 func GetNewPrize() (model.Prize, error) {
-	//doc := catGovSite()
-	//num := doc.Find("div.ssqQh-dom").Text()
-	//logger.Info("第%s期", num)
-	//redNum := doc.Find(".ssqRed-dom").Text()
-	//logger.Info("红球: ", redNum)
-	//blueNum := doc.Find(".ssqBlue-dom").Text()
-	//logger.Info("篮球: ", blueNum)
-	//var (
-	//	redNumList  []string
-	//	blueNumList []string
-	//)
-	//redNumList = utils.StrList2code(redNum)
-	//blueNumList = utils.StrList2code(blueNum)
-	//sort.Strings(redNumList)
 	resultList := GetPrizeInformation()
 
 	return model.Prize{

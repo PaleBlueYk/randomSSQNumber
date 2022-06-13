@@ -24,8 +24,9 @@ func Notice2User() {
 		logger.Info("开始广播中奖通知")
 	RESTART:
 		prizeInfo, _ := GetNewPrize()
+		logger.Info("期号: ", prizeInfo.Num)
 		result, err := BingoCheck(prizeInfo, NoticeUserList(prizeInfo.Num))
-		if err != nil && err.Error() == "期号不对应" {
+		if err.Error() == "期号不对应" {
 			// 期号不对应等5分钟后检查
 			time.Sleep(5 * time.Minute)
 			logger.Info("等待5分钟...")
