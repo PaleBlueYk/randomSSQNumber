@@ -66,7 +66,7 @@ func GetPrizeInformation() []model.PrizeInformation {
 // GetNewPrize 获取本期开奖号码
 func GetNewPrize() (model.Prize, error) {
 	resultList := GetPrizeInformation()
-
+	//logger.Info(resultList)
 	return model.Prize{
 		Num:     strconv.Itoa(resultList[0].Num),
 		RedNum:  resultList[0].RedNum,

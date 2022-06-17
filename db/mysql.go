@@ -40,6 +40,7 @@ func ConnectMysql() (err error) {
 func Migrate() {
 	if err := Mysql.AutoMigrate(
 		&model.NumSaveData{},
+		&model.CheckNum{},
 	); err != nil {
 		logger.Error(err)
 	}

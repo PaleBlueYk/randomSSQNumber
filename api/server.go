@@ -68,6 +68,10 @@ func SubmitMySSQ(c *gin.Context) {
 		return
 	}
 
+	if err = db.Mysql.FirstOrCreate(&model.CheckNum{Num: tmpData.Num, NeedCheck: true}).Error; err != nil {
+		logger.Error("保存", err)
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"msg": "提交成功!",
 	})

@@ -24,8 +24,13 @@ func Notice2User() {
 		logger.Info("开始广播中奖通知")
 	RESTART:
 		prizeInfo, _ := GetNewPrize()
-		logger.Info("期号: ", prizeInfo.Num)
-		result, err := BingoCheck(prizeInfo, NoticeUserList(prizeInfo.Num))
+		var checkNum model.CheckNum
+		if err := db.Mysql.Where("need_check = 1 AND checked = 0").Last(&checkNum).Error; err != nil {
+			logger.Warn("当前无需通知", err)
+			return
+		}
+		logger.Info("期号: ", checkNum)
+		result, err := BingoCheck(prizeInfo, NoticeUserList(strconv.Itoa(checkNum.Num)))
 		if err != nil && err.Error() == "期号不对应" {
 			// 期号不对应等5分钟后检查
 			time.Sleep(5 * time.Minute)

@@ -39,6 +39,14 @@ type NumSaveData struct {
 	BingoMoney uint   `json:"bingo_money"`               // 中奖金额 元
 }
 
+type CheckNum struct {
+	gorm.Model
+
+	Num       int  `json:"num" gorm:"index;comment:'期号'"` // 期号
+	NeedCheck bool `json:"need_check" gorm:"comment:'是否需要检查'"`
+	Checked   bool `json:"checked" gorm:"comment:'是否已经检查'"`
+}
+
 // TmpSaveNum redis 临时存储
 type TmpSaveNum struct {
 	ID   string   `json:"id"`   // 随机id redis key
@@ -48,6 +56,6 @@ type TmpSaveNum struct {
 }
 
 type BingoInfo struct {
-	BingoInfo  string `json:"bingo_level"`               // 中奖情况
-	BingoMoney uint   `json:"bingo_money"`               // 中奖金额 元
+	BingoInfo  string `json:"bingo_level"` // 中奖情况
+	BingoMoney uint   `json:"bingo_money"` // 中奖金额 元
 }
