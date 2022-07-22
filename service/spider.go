@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/PaleBlueYk/randomSSQNumber/model"
 	"github.com/PaleBlueYk/randomSSQNumber/pkg/site"
 	"github.com/PaleBlueYk/randomSSQNumber/pkg/utils"
@@ -67,6 +68,9 @@ func GetPrizeInformation() []model.PrizeInformation {
 func GetNewPrize() (model.Prize, error) {
 	resultList := GetPrizeInformation()
 	//logger.Info(resultList)
+	if len(resultList) <= 0 {
+		return model.Prize{}, errors.New("未获取到数据")
+	}
 	return model.Prize{
 		Num:     strconv.Itoa(resultList[0].Num),
 		RedNum:  resultList[0].RedNum,

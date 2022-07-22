@@ -48,6 +48,8 @@ func Notice2User() {
 				logger.Error(err)
 			}
 		}
+		checkNum.Checked = true
+		db.Mysql.Save(&checkNum)
 	})
 	if err != nil {
 		logger.Error(err)
@@ -74,7 +76,7 @@ func BingoCheck(prizeInfo model.Prize, dataList []model.NumSaveData) (result []m
 			continue
 		}
 		if strconv.Itoa(data.Num) != prizeInfo.Num {
-			logger.Error("期号不对应: %s - %s", data.Num, prizeInfo.Num)
+			logger.Error("期号不对应: %d - %s", data.Num, prizeInfo.Num)
 			err = errors.New("期号不对应")
 			return
 		}
